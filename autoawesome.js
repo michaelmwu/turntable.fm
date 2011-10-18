@@ -1,8 +1,19 @@
 (function(){
   var ttObj = null;
+  var roomInfo = null;
+  
+  function seated() {
+    for(var i = 0; typeof(ttObj.djs[i]) != 'undefined'; i++) {
+      if(ttObj.djs[i][0] == roomInfo.selfId) {
+        return true;
+      }
+    }
+    
+    return false;
+  }
 
   function getTurntableObjects(){
-    var roomInfo = null;
+    roomInfo = null;
   
     var dfd = $.Deferred(),
       resolveWhenReady = function() {
@@ -52,7 +63,7 @@
       // Main loop - repeat every 5 seconds
     setInterval(function() {
         if(ttObj.current_dj) {
-            if(ttObj.current_dj[0] != ttObj.myuserid) { 
+            if(ttObj.current_dj[0] != ttObj.myuserid && !seated()) { 
                 ttObj.callback('upvote');
             }
         }
