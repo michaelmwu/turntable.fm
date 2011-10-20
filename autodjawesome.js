@@ -49,7 +49,11 @@
     return dfd.promise();
   }
  
+ console.log('Loading autobopper');
+ 
  $.when(getTurntableObjects()).then(function() {
+    console.log('Found turntable objects, initiating bop');
+ 
       // Main loop - repeat every 5 seconds
     setInterval(function() {
         if(ttObj.current_dj) {
