@@ -59,18 +59,20 @@
     return dfd.promise();
   }
  
- console.log('Loading autobopper');
+  console.log('Loading autobopper');
  
- $.when(getTurntableObjects()).then(function() {
+  function bop() {
+    if(!seated()) { 
+        ttObj.callback('upvote');
+    }
+    
+    var delay = randomXtoY(5000, 30000);
+    setTimeout(bop, delay);
+  }
+ 
+  $.when(getTurntableObjects()).then(function() {
     console.log('Found turntable objects, initiating bop');
     
-      // Main loop - repeat every 5 seconds
-    setInterval(function() {
-        if(ttObj.current_dj) {
-            if(ttObj.current_dj[0] != ttObj.myuserid && !seated()) { 
-                ttObj.callback('upvote');
-            }
-        }
-    }, 5000);
+    bop();
   });
 })();

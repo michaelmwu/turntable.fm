@@ -2,6 +2,13 @@
   var ttObj = null;
   var roomInfo = null;
 
+  //function to get random number upto m
+  function randomXtoY(minVal,maxVal,floatVal)
+  {
+    var randVal = minVal+(Math.random()*(maxVal-minVal));
+    return typeof floatVal=='undefined'?Math.round(randVal):randVal.toFixed(floatVal);
+  }
+  
   function getTurntableObjects(){
     roomInfo = null;
   
@@ -49,18 +56,26 @@
     return dfd.promise();
   }
  
- console.log('Loading autobopper');
+  console.log('Loading autobopper');
+ 
+  function bop() {
+    if(ttObj.current_dj && ttObj.current_dj[0] != ttObj.myuserid && !seated()) { 
+        ttObj.callback('upvote');
+    }
+    
+    var delay = randomXtoY(5000, 30000);
+    setTimeout(bop, delay);
+  }
+ 
+  $.when(getTurntableObjects()).then(function() {
+    console.log('Found turntable objects, initiating bop');
+    
+    bop();
+  });
  
  $.when(getTurntableObjects()).then(function() {
     console.log('Found turntable objects, initiating bop');
  
-      // Main loop - repeat every 5 seconds
-    setInterval(function() {
-        if(ttObj.current_dj) {
-            if(ttObj.current_dj[0] != ttObj.myuserid) { 
-                ttObj.callback('upvote');
-            }
-        }
-    }, 5000);
+    bop();
   });
 })();
