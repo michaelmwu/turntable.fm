@@ -59,7 +59,7 @@
   console.log('Loading autobopper');
  
   function bop() {
-    if(ttObj.current_dj && ttObj.current_dj[0] != ttObj.myuserid && !seated()) { 
+    if(ttObj.current_dj && ttObj.current_dj[0] != ttObj.myuserid) { 
         ttObj.callback('upvote');
     }
     
